@@ -1,0 +1,30 @@
+# Create a GitHub Action to Email a report from a file at 6 a.m. daily
+name: Email Report
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+
+jobs:
+  email_report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Send email
+        uses: dawidd6/action-send-mail@v2
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL }}
+          password: ${{ secrets.PASSWORD }}
+          subject: 'Daily Report'
+          body: 'Please find the attached report'
+          from: ${{ secrets.EMAIL }}
+          to: ${{ secrets.EMAIL }}
+          attachments: 'deploy-app.yml'
+```
+
+## Conclusion
+
+Congratulations! You have successfully created a GitHub Action to deploy your application on Heroku. You can now modify the workflow file to suit your needs and deploy your application. Now, you can deploy your application on Heroku with every push to the repository or on a scheduled basis.
